@@ -1,4 +1,4 @@
-# 📚 Sistema de Biblioteca
+# Sistema de Biblioteca
 
 Proyecto base para el curso de **Testing, Implementación y Mantenimiento de Sistemas**.  
 Cubre las funcionalidades RF-01, RF-02 y RF-03 del requerimiento funcional de biblioteca.
