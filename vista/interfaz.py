@@ -199,6 +199,36 @@ class InterfazBiblioteca:
         self.prest_usuario_entry.bind("<KeyRelease>", lambda e: validar_usuario(self.prest_usuario_entry, self.prest_usuario_error))
         self.dev_usuario_entry.bind("<KeyRelease>", lambda e: validar_usuario(self.dev_usuario_entry, self.dev_usuario_error))
 
+    def prestar_libro(self):
+        isbn = self.prest_isbn_entry.get()
+        usuario = self.prest_usuario_entry.get()
+        try:
+            prestamo = self.controlador.prestar_libro(isbn, usuario)
+            messagebox.showinfo("Préstamo", f"Préstamo ID {prestamo.id_prestamo} - Devuelva antes de {prestamo.fecha_devolucion_prevista}")
+            self.prest_isbn_entry.delete(0, tk.END)
+            self.prest_usuario_entry.delete(0, tk.END)
+            self.prest_isbn_error.config(text="")
+            self.prest_usuario_error.config(text="")
+            # 👇 Refrescar la tabla de préstamos activos
+            self.actualizar_listado()
+        except ValueError as e:
+            messagebox.showerror("Error", str(e))
+
+    def devolver_libro(self):
+        isbn = self.dev_isbn_entry.get()
+        usuario = self.dev_usuario_entry.get()
+        try:
+            self.controlador.devolver_libro(isbn, usuario)
+            messagebox.showinfo("Devolución", "Libro devuelto correctamente")
+            self.dev_isbn_entry.delete(0, tk.END)
+            self.dev_usuario_entry.delete(0, tk.END)
+            self.dev_isbn_error.config(text="")
+            self.dev_usuario_error.config(text="")
+            # 👇 Refrescar la tabla de préstamos activos
+            self.actualizar_listado()
+        except ValueError as e:
+            messagebox.showerror("Error", str(e))
+
     def registrar_libro(self):
         isbn = self.isbn_entry.get()
         titulo = self.titulo_entry.get()
@@ -219,32 +249,8 @@ class InterfazBiblioteca:
             self.titulo_error.config(text="")
             self.autor_error.config(text="")
             self.cantidad_error.config(text="")
-        except ValueError as e:
-            messagebox.showerror("Error", str(e))
-
-    def prestar_libro(self):
-        isbn = self.prest_isbn_entry.get()
-        usuario = self.prest_usuario_entry.get()
-        try:
-            prestamo = self.controlador.prestar_libro(isbn, usuario)
-            messagebox.showinfo("Préstamo", f"Préstamo ID {prestamo.id_prestamo} - Devuelva antes de {prestamo.fecha_devolucion_prevista}")
-            self.prest_isbn_entry.delete(0, tk.END)
-            self.prest_usuario_entry.delete(0, tk.END)
-            self.prest_isbn_error.config(text="")
-            self.prest_usuario_error.config(text="")
-        except ValueError as e:
-            messagebox.showerror("Error", str(e))
-
-    def devolver_libro(self):
-        isbn = self.dev_isbn_entry.get()
-        usuario = self.dev_usuario_entry.get()
-        try:
-            self.controlador.devolver_libro(isbn, usuario)
-            messagebox.showinfo("Devolución", "Libro devuelto correctamente")
-            self.dev_isbn_entry.delete(0, tk.END)
-            self.dev_usuario_entry.delete(0, tk.END)
-            self.dev_isbn_error.config(text="")
-            self.dev_usuario_error.config(text="")
+            # 👇 Opcional: refrescar por si algún préstamo se ve afectado
+            self.actualizar_listado()
         except ValueError as e:
             messagebox.showerror("Error", str(e))
 
