@@ -1,0 +1,20 @@
+{
+    "978-0-13-235088-4": {
+        "isbn": "978-0-13-235088-4",
+        "titulo": "Clean Code",
+        "autor": "Robert C. Martin",
+        "cantidad": 3
+    },
+    "978-0-596-51928-2": {
+        "isbn": "978-0-596-51928-2",
+        "titulo": "Aprendiendo Python",
+        "autor": "Mark Lutz",
+        "cantidad": 2
+    },
+    "978-0-201-63361-0": {
+        "isbn": "978-0-201-63361-0",
+        "titulo": "Design Patterns",
+        "autor": "Erich Gamma",
+        "cantidad": 1
+    }
+}
